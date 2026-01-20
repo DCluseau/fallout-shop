@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/bootstrap-5.3.8-dist/css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="css/bootstrap-5.3.8-dist/js/bootstrap.js"></script>
-    <script src="scripts/shop-script.js"></script>
+    
 </head>
 
 <body class="bg-dark">
@@ -34,15 +34,15 @@
              <ul class="nav nav-pills row">
                 <li class="nav-item col">
                     <!-- <button type="button" class="btn btn-warning">Catégorie 1</button> -->
-                    <a href="#" class="nav-link active bg-warning text-dark" data-bs-toggle="pill">Catégorie 1</a>
+                    <a href="#" id="category1" class="nav-link text-warning" onclick="toggleCategory('category1')">Catégorie 1</a>
                 </li>
                 <li class="nav-item col">
                     <!-- <button type="button" class="btn btn-warning">Catégorie 2</button> -->
-                    <a href="#" class="nav-link text-warning" data-bs-toggle="pill">Catégorie 2</a>
+                    <a href="#" id="category2" class="nav-link text-warning" onclick="toggleCategory('category2')">Catégorie 2</a>
                 </li>
                 <li class="nav-item col">
                     <!-- <button type="button" class="btn btn-warning">Catégorie 3</button> -->
-                    <a href="#" class="nav-link text-warning" data-bs-toggle="pill">Catégorie 3</a>
+                    <a href="#" id="category3" class="nav-link text-warning" onclick="toggleCategory('category3')">Catégorie 3</a>
                 </li>
              </ul>
         </div>
@@ -151,6 +151,7 @@
     </div>
     <footer id="foot">
     </footer>
+    <script src="scripts/shop-script.js"></script>
 </body>
 
 </html>
