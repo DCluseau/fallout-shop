@@ -1,0 +1,15 @@
+@font-face {
+    font-family: "Overseer";
+    src: url('fonts/Overseer.otf');
+    src: url('fonts/Overseer Bold Italic.otf'),
+        url('fonts/Overseer Bold.otf'),
+        url('fonts/Overseer Italic.otf');
+}
+
+#logo{
+    max-width: 100px;
+}
+h1{
+    font-family:'Overseer', 'Arial Narrow', Arial, sans-serif;
+    font-size: 3em;
+}
