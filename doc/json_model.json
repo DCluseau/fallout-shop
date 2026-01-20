@@ -1,0 +1,67 @@
+{
+    "categories": [
+        {
+            "id" : 0,
+            "name" : "cat1"
+        },
+        {
+            "id" : 1,
+            "name" : "cat2"
+        }
+    ],
+    "items":[
+        {
+            "id": 0,
+            "ean": "9782054125987",
+            "name": "Lorem",
+            "price": 10.0,
+            "stock_quantity": 0,
+            "categories": [
+                {
+                    "id": 1
+                },
+                {
+                    "id": 0
+                }
+            ]
+        }
+    ],
+    "orders":[
+        {
+            "id": 0,
+            "number": "20260120101730001",
+            "date": "20/01/2026",
+            "total_amount": 20.0,
+            "items": [
+                {
+                    "id": 0,
+                    "quantity" : 1
+                },
+                {
+                    "id": 1,
+                    "quantity" : 1
+                }
+            ]
+        }
+    ],
+    "customers":[
+        {
+            "id": 0,
+            "lastname": "MacLane",
+            "firstname": "Lucy",
+            "address": "Vault 33",
+            "login": "maclanelucy",
+            "pwd": "whatswiththisworld?",
+            "cart": [
+                {
+                    "id": 1,
+                    "quantity": 1
+                },
+                {
+                    "id": 0,
+                    "quantity": 2
+                }
+            ]
+        }
+    ]
+}
