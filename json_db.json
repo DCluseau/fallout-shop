@@ -1,0 +1,190 @@
+{
+    "categories": [
+        {
+            "id" : 0,
+            "name" : "Consumables"
+        },
+        {
+            "id" : 1,
+            "name" : "Armors"
+        },
+        {
+            "id" : 2,
+            "name" : "Weapons"
+        },
+        {
+            "id" : 3,
+            "name" : "Junk"
+        },
+        {
+            "id" : 4,
+            "name" : "Unique"
+        },
+        {
+            "id" : 5,
+            "name" : "Miscellaneous"
+        }
+    ],
+    "items":[
+        {
+            "id": 0,
+            "ean": "9782054125987",
+            "name": "Stimpak",
+            "price": 75.00,
+            "stock_quantity": 10,
+            "categories": [
+                {
+                    "id": 0
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "ean": "9782054125988",
+            "name": "Noodles",
+            "price": 5.00,
+            "stock_quantity": 20,
+            "categories": [
+                {
+                    "id": 0
+                }
+            ]
+        }
+        ,
+        {
+            "id": 2,
+            "ean": "9782054125989",
+            "name": "Gobi Desert Rifle",
+            "price": 6200.00,
+            "stock_quantity": 1,
+            "categories": [
+                {
+                    "id": 2
+                },
+                {
+                    "id": 4
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "ean": "9782054125990",
+            "name": "Christine's COS silencer rifle",
+            "price": 6100.00,
+            "stock_quantity": 1,
+            "categories": [
+                {
+                    "id": 2
+                },
+                {
+                    "id": 4
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "ean": "9782054125991",
+            "name": "Desert Ranger Combat Armor",
+            "price": 8000.00,
+            "stock_quantity": 2,
+            "categories": [
+                {
+                    "id": 1
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "ean": "9782054125992",
+            "name": "Bobby pin",
+            "price": 1.00,
+            "stock_quantity": 5,
+            "categories": [
+                {
+                    "id": 5
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "ean": "9782054125993",
+            "name": "Cook-cook's head",
+            "price": 250.00,
+            "stock_quantity": 1,
+            "categories": [
+                {
+                    "id": 3
+                },
+                {
+                    "id": 4
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "ean": "9782054125994",
+            "name": "Cuddle's toy car",
+            "price": 2.00,
+            "stock_quantity": 1,
+            "categories": [
+                {
+                    "id": 3
+                },
+                {
+                    "id": 4
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "ean": "9782054125995",
+            "name": "Spatula",
+            "price": 1.00,
+            "stock_quantity": 3,
+            "categories": [
+                {
+                    "id": 3
+                }
+            ]
+        }
+    ],
+    "orders":[
+        {
+            "id": 0,
+            "number": "20260120101730001",
+            "date": "20/01/2296",
+            "total_amount": 20.0,
+            "client_id": 0,
+            "items": [
+                {
+                    "id": 0,
+                    "quantity" : 1
+                },
+                {
+                    "id": 1,
+                    "quantity" : 1
+                }
+            ]
+        }
+    ],
+    "customers":[
+        {
+            "id": 0,
+            "lastname": "MacLane",
+            "firstname": "Lucy",
+            "address": "Vault 33",
+            "login": "maclanelucy",
+            "pwd": "okeydokey",
+            "cart": [
+                {
+                    "id": 0,
+                    "quantity": 2
+                },
+                {
+                    "id": 5,
+                    "quantity": 10
+                }
+            ]
+        }
+    ]
+}
