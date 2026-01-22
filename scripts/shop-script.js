@@ -91,10 +91,10 @@ function toggleCategory(category){
     document.getElementById(category).classList.toggle("text-warning");
 }
 function toggleItems(category){
-    if(document.getElementsByClassName("category").style.display = "block")
-        document.getElementsByClassName("category").style.display = "none";
+    if(document.getElementsByClassName("category-${category}").style.display = "block")
+        document.getElementsByClassName("category-${category}").style.display = "none";
     else{
-        document.getElementsByClassName("category").style.display = "block";
+        document.getElementsByClassName("category-${category}").style.display = "block";
     }
 }
 
@@ -142,13 +142,17 @@ for(i = 0; i < db.customers.length; i++){
 var shop = new Shop(tabCategories, tabItems, tabCustomers);
 
 function displayCategoriesMenu(){
+    var tagString = "";
     for(var i = 0; i < shop.categories.length; i++){
-        var tagString = '<div id="item-${shop.stock[i].id}" class="col-3 col-md-2 col-lg-2 col-xl-2 card ';
-        tagString = tagString + '"><div class="card-body"><img src="${shop.stock[i].img}" class="img-thumbnail" /><dl><dt>${shop.stock[i].name}</dt><dd>10.00</dd></dl></div></div>';
+        tagString = '<li class="nav-item col"><a href="#" id="category-' + shop.categories[i].id + '" class="nav-link text-warning" onclick="toggleCategory(\'' + shop.categories[i].id + '\')">' + shop.categories[i].name + '</a></li>';
         var doc = new DOMParser().parseFromString(tagString, "text/html");
-        var art = doc.getElementById("item-${shop.stock[i].id}");
-        document.getElementById("items-list").appendChild(art);
+        var cat = doc.getElementsByTagName("li");
+        for(var j = 0; j < cat.length; j++){
+            document.getElementById("menu").appendChild(cat[j]);
+        }    
     }
+    
+    
 }
 
 function displayShopItemsList(){
@@ -156,7 +160,7 @@ function displayShopItemsList(){
     for(var i = 0; i < shop.stock.length; i++){
         var tagString = '<div id="item-${shop.stock[i].id}" class="col-3 col-md-2 col-lg-2 col-xl-2 card ';
         for(var j = 0; j < shop.stock[i].categories.length; j++){
-            tagString = tagString + ' category-${shop.stock[i].categories}';
+            tagString = tagString + ' category-${shop.stock[i].categories[j].id}';
         }
         tagString = tagString + '"><div class="card-body"><img src="${shop.stock[i].img}" class="img-thumbnail" /><dl><dt>${shop.stock[i].name}</dt><dd>10.00</dd></dl></div></div>';
         var doc = new DOMParser().parseFromString(tagString, "text/html");
@@ -166,11 +170,7 @@ function displayShopItemsList(){
 }
 
 displayShopItemsList();
-console.log(document.getElementById("items-list"));
-// Test log
-// console.log(document.getElementById("items-list").innerHtml);
-
-
+displayCategoriesMenu();
 // Events
 // document.getElementById("category1").addEventListener("click", toggleCategory("category1"));
 // document.getElementById("category1").addEventListener("click", displayShopItemsList("category1"));
