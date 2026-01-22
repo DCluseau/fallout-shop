@@ -144,15 +144,13 @@ var shop = new Shop(tabCategories, tabItems, tabCustomers);
 function displayCategoriesMenu(){
     var tagString = "";
     for(var i = 0; i < shop.categories.length; i++){
-        tagString = '<li class="nav-item col"><a href="#" id="category-' + shop.categories[i].id + '" class="nav-link text-warning" onclick="toggleCategory(\'' + shop.categories[i].id + '\')">' + shop.categories[i].name + '</a></li>';
+        tagString = '<li class="nav-item col"><a href="#" id="category-' + shop.categories[i].id + '" class="nav-link text-warning" onclick="toggleCategory(\'category-' + shop.categories[i].id + '\')">' + shop.categories[i].name + '</a></li>';
         var doc = new DOMParser().parseFromString(tagString, "text/html");
         var cat = doc.getElementsByTagName("li");
         for(var j = 0; j < cat.length; j++){
             document.getElementById("menu").appendChild(cat[j]);
         }    
     }
-    
-    
 }
 
 function displayShopItemsList(){
