@@ -2,6 +2,10 @@ var jsonString = "{\"categories\": [{\"id\" : 0, \"name\" : \"Consumables\" }, {
 
 var db = JSON.parse(jsonString);
 
+var customerId = 0;
+
+var auth = true;
+
 class Category{
     constructor(id, name){
         this.id = id;
@@ -89,13 +93,56 @@ function toggleCategory(category){
     document.getElementById(category).classList.toggle("bg-warning");
     document.getElementById(category).classList.toggle("text-dark");
     document.getElementById(category).classList.toggle("text-warning");
-}
-function toggleItems(category){
-    if(document.getElementsByClassName("category-${category}").style.display = "block")
-        document.getElementsByClassName("category-${category}").style.display = "none";
-    else{
-        document.getElementsByClassName("category-${category}").style.display = "block";
+    if(document.getElementById(category).classList.contains("bg-warning")){
+        toggleItems(category, "on");
+    }else{
+        toggleItems(category, "off");
     }
+    
+}
+function toggleItems(category, toggle){
+    var itemCat = document.getElementsByClassName(category);
+    for(var i = 0; i < itemCat.length; i++){
+        if(toggle == "on"){
+            document.getElementById(itemCat[i].id).style.display = "block";
+        }else{
+            document.getElementById(itemCat[i].id).style.display = "none";
+        }
+        console.log(document.getElementById(itemCat[i].id));    
+    }
+}
+
+function displayCategoriesMenu(){
+    var tagString = "";
+    for(var i = 0; i < shop.categories.length; i++){
+        tagString = '<li class="nav-item col"><a href="#" id="category-' + shop.categories[i].id + '" class="nav-link bg-warning text-dark" onclick="toggleCategory(\'category-' + shop.categories[i].id + '\')">' + shop.categories[i].name + '</a></li>';
+        var doc = new DOMParser().parseFromString(tagString, "text/html");
+        var cat = doc.getElementsByTagName("li");
+        for(var j = 0; j < cat.length; j++){
+            document.getElementById("menu").appendChild(cat[j]);
+        }    
+    }
+}
+
+function displayShopItemsList(){
+    for(var i = 0; i < shop.stock.length; i++){
+        var tagString = '<div id="item-' + shop.stock[i].id + '" class="col-3 col-md-2 col-lg-2 col-xl-2 card ';
+        for(var j = 0; j < shop.stock[i].categories.length; j++){
+            tagString = tagString + ' category-' + shop.stock[i].categories[j].id;
+        }
+        tagString = tagString + '" style="display: block;"><div class="card-body"><img src="' + shop.stock[i].img + '" class="img-thumbnail" /><dl><dt>' + shop.stock[i].name + '</dt><dd>' + shop.stock[i].price +' caps</dd></dl><button type="button" class="btn btn-success text-end">+</button></div></div>';
+        var doc = new DOMParser().parseFromString(tagString, "text/html");
+        var art = doc.getElementById("item-" + shop.stock[i].id);
+        document.getElementById("items-list").appendChild(art);
+    }
+}
+
+if(auth){
+    document.getElementById("connexion").style.display = "none";
+    document.getElementById("account").style.display = "block";
+}else{
+    document.getElementById("connexion").style.display = "block";
+    document.getElementById("account").style.display = "none";
 }
 
 // Main
@@ -141,34 +188,5 @@ for(i = 0; i < db.customers.length; i++){
 
 var shop = new Shop(tabCategories, tabItems, tabCustomers);
 
-function displayCategoriesMenu(){
-    var tagString = "";
-    for(var i = 0; i < shop.categories.length; i++){
-        tagString = '<li class="nav-item col"><a href="#" id="category-' + shop.categories[i].id + '" class="nav-link text-warning" onclick="toggleCategory(\'category-' + shop.categories[i].id + '\')">' + shop.categories[i].name + '</a></li>';
-        var doc = new DOMParser().parseFromString(tagString, "text/html");
-        var cat = doc.getElementsByTagName("li");
-        for(var j = 0; j < cat.length; j++){
-            document.getElementById("menu").appendChild(cat[j]);
-        }    
-    }
-}
-
-function displayShopItemsList(){
-    
-    for(var i = 0; i < shop.stock.length; i++){
-        var tagString = '<div id="item-${shop.stock[i].id}" class="col-3 col-md-2 col-lg-2 col-xl-2 card ';
-        for(var j = 0; j < shop.stock[i].categories.length; j++){
-            tagString = tagString + ' category-${shop.stock[i].categories[j].id}';
-        }
-        tagString = tagString + '"><div class="card-body"><img src="${shop.stock[i].img}" class="img-thumbnail" /><dl><dt>${shop.stock[i].name}</dt><dd>10.00</dd></dl></div></div>';
-        var doc = new DOMParser().parseFromString(tagString, "text/html");
-        var art = doc.getElementById("item-${shop.stock[i].id}");
-        document.getElementById("items-list").appendChild(art);
-    }
-}
-
 displayShopItemsList();
 displayCategoriesMenu();
-// Events
-// document.getElementById("category1").addEventListener("click", toggleCategory("category1"));
-// document.getElementById("category1").addEventListener("click", displayShopItemsList("category1"));
