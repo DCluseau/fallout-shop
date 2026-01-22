@@ -96,47 +96,53 @@ function toggleItems(category){
     document.getElementById("items-list").classList.toggle("bg-warning");
 }
 
-// Events
-document.getElementById("category1").addEventListener("click", toggleCategory("category1"));
-
 // Main
 var tabCategories = [];
 var tabItems = [];
 var tabCustomers = [];
 var tabOrders = [];
 var i = 0;
+// Get categories from Json
 for(i = 0; i < db.categories.length; i++){
-    var category = new Category(db.categories[0].id, db.categories[0].name);
+    var category = new Category(db.categories[i].id, db.categories[i].name);
     tabCategories.push(category);
 }
-
+// Get items from Json with categories
 for(i = 0; i < db.items.length; i++){
     var tabCat = [];
+
     for(var j = 0; j < db.items[i].categories.length; j++){
-        var category = new Category(db.items[i].categories[j].id, db.items[i].categories[j].name);
+        var categoryFound = tabCategories.find((category) => category.id === db.items[i].categories[j].id);
+        var category = new Category(categoryFound.id, categoryFound.name);
         tabCat.push(category);
     }
     var item = new Item(db.items[i].id, db.items[i].ean, db.items[i].name, db.items[i].price, db.items[i].stock_quantity, db.items[i].img, tabCat);
     tabItems.push(item);
 }
-
+// Get customers from Json, with cart and orders
 for(i = 0; i < db.customers.length; i++){
     var tabCart = {};
+    var tabOrders = [];
     // console.log(db.customers);
     for(var j = 0; j < db.customers[i].cart.length; j++){
         var itemFound = tabItems.find((item) => item.id === db.customers[i].cart[j].id);
         tabCart[db.customers[i].cart[j].quantity] = itemFound;
-        console.log(tabCart);
+        // console.log(tabCart);
     }
-    //// VOIR COMMENT GERER LES COMMANDES ////
-    var customer = new Customer(db.customers[i].id, db.customers[i].firstname, db.customers[i].lastname, db.customers[i].address, db.customers[i].login, db.customers[i].pwd, order, tabCart);
+    for(var j = 0; j < db.orders.length; j++){
+        var orderFound = db.orders.find((order) => order.client_id === db.customers[i].id);
+        tabOrders.push(orderFound);
+    }
+    var customer = new Customer(db.customers[i].id, db.customers[i].firstname, db.customers[i].lastname, db.customers[i].address, db.customers[i].login, db.customers[i].pwd, tabOrders, tabCart);
     tabCustomers.push(customer);
 }
 
-console.log(tabCustomers);
-
-
-var shop = new Shop(db.categories, db.items, db.customers);
+var shop = new Shop(tabCategories, tabItems, tabCustomers);
 
 // Test log
-// console.log(shop);
+console.log(shop);
+
+
+
+// Events
+document.getElementById("category1").addEventListener("click", toggleCategory("category1"));
