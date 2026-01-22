@@ -57,8 +57,19 @@ class Customer{
     addOrder(order){
         this.orders.push(order);
     }
-    addCartItem(item, quantity){
-        this.cart[item] = quantity;
+    addCartItem(idItem, quantity){
+        var itemFound = false;
+        for(var i = 0; i < this.cart.length; i++){
+            if(this.cart[i][0].id == idItem){
+                this.cart[i][0][0] += quantity;
+                itemFound = true;
+            }
+        }
+        if(itemFound == false){
+            var newItem = shop.stock.find((item) => item.id === idItem);
+            this.cart.push([[newItem][quantity]]);
+        }
+        console.log(this.cart);
     }
 }
 
@@ -130,10 +141,18 @@ function displayShopItemsList(){
         for(var j = 0; j < shop.stock[i].categories.length; j++){
             tagString = tagString + ' category-' + shop.stock[i].categories[j].id;
         }
-        tagString = tagString + '" style="display: block;"><div class="card-body"><img src="' + shop.stock[i].img + '" class="img-thumbnail" /><dl><dt>' + shop.stock[i].name + '</dt><dd>' + shop.stock[i].price +' caps</dd></dl><button type="button" class="btn btn-success text-end">+</button></div></div>';
+        tagString = tagString + '" style="display: block;"><div class="card-body"><img src="' + shop.stock[i].img + '" class="img-thumbnail" /><dl><dt>' + shop.stock[i].name + '</dt><dd>' + shop.stock[i].price +' caps</dd></dl><button type="button" class="btn btn-success text-end" onClick="addToCart(' + shop.stock[i].id + ', 1)">+</button></div></div>';
         var doc = new DOMParser().parseFromString(tagString, "text/html");
         var art = doc.getElementById("item-" + shop.stock[i].id);
         document.getElementById("items-list").appendChild(art);
+    }
+}
+
+function addToCart(idItem, quantity){
+    for(var i = 0; i < shop.customers.length; i++){
+        if(customerId == shop.customers[i].id){
+            shop.customers[i].addCartItem(idItem, quantity);
+        }
     }
 }
 
@@ -170,13 +189,11 @@ for(i = 0; i < db.items.length; i++){
 }
 // Get customers from Json, with cart and orders
 for(i = 0; i < db.customers.length; i++){
-    var tabCart = {};
+    var tabCart = [];
     var tabOrders = [];
-    // console.log(db.customers);
     for(var j = 0; j < db.customers[i].cart.length; j++){
         var itemFound = tabItems.find((item) => item.id === db.customers[i].cart[j].id);
-        tabCart[db.customers[i].cart[j].quantity] = itemFound;
-        // console.log(tabCart);
+        tabCart.push([[itemFound],[db.customers[i].cart[j].quantity]]);
     }
     for(var j = 0; j < db.orders.length; j++){
         var orderFound = db.orders.find((order) => order.client_id === db.customers[i].id);
@@ -190,3 +207,4 @@ var shop = new Shop(tabCategories, tabItems, tabCustomers);
 
 displayShopItemsList();
 displayCategoriesMenu();
+// console.log(shop.customers);
