@@ -19,7 +19,7 @@ class Item{
         this.img = img;
         this.categories = categories;
     }
-
+    
     addCategory(category){
         this.categories.push(category);
     }
@@ -33,7 +33,7 @@ class Order{
         this.total_amount = total_amount;
         this.items = items;
     }
-
+    
     addItem(item){
         this.items.push(item);
     }
@@ -64,15 +64,15 @@ class Shop{
         this.stock = stock;
         this.customers = customers;
     }
-
+    
     addCategory(category){
         this.categories.push(category);
     }
-
+    
     addItem(item){
         this.stock.push(item);
     }
-
+    
     addCustomer(customer){
         this.customers.push(customer);
     }
@@ -81,7 +81,7 @@ class Shop{
 // Functions
 
 function findItem(tab, id) {
-  return tab.id === id;
+    return tab.id === id;
 }
 
 function toggleCategory(category){
@@ -91,9 +91,11 @@ function toggleCategory(category){
     document.getElementById(category).classList.toggle("text-warning");
 }
 function toggleItems(category){
-    
-
-    document.getElementById("items-list").classList.toggle("bg-warning");
+    if(document.getElementsByClassName("category").style.display = "block")
+        document.getElementsByClassName("category").style.display = "none";
+    else{
+        document.getElementsByClassName("category").style.display = "block";
+    }
 }
 
 // Main
@@ -110,7 +112,7 @@ for(i = 0; i < db.categories.length; i++){
 // Get items from Json with categories
 for(i = 0; i < db.items.length; i++){
     var tabCat = [];
-
+    
     for(var j = 0; j < db.items[i].categories.length; j++){
         var categoryFound = tabCategories.find((category) => category.id === db.items[i].categories[j].id);
         var category = new Category(categoryFound.id, categoryFound.name);
@@ -139,10 +141,36 @@ for(i = 0; i < db.customers.length; i++){
 
 var shop = new Shop(tabCategories, tabItems, tabCustomers);
 
-// Test log
-console.log(shop);
+function displayCategoriesMenu(){
+    for(var i = 0; i < shop.categories.length; i++){
+        var tagString = '<div id="item-${shop.stock[i].id}" class="col-3 col-md-2 col-lg-2 col-xl-2 card ';
+        tagString = tagString + '"><div class="card-body"><img src="${shop.stock[i].img}" class="img-thumbnail" /><dl><dt>${shop.stock[i].name}</dt><dd>10.00</dd></dl></div></div>';
+        var doc = new DOMParser().parseFromString(tagString, "text/html");
+        var art = doc.getElementById("item-${shop.stock[i].id}");
+        document.getElementById("items-list").appendChild(art);
+    }
+}
 
+function displayShopItemsList(){
+    
+    for(var i = 0; i < shop.stock.length; i++){
+        var tagString = '<div id="item-${shop.stock[i].id}" class="col-3 col-md-2 col-lg-2 col-xl-2 card ';
+        for(var j = 0; j < shop.stock[i].categories.length; j++){
+            tagString = tagString + ' category-${shop.stock[i].categories}';
+        }
+        tagString = tagString + '"><div class="card-body"><img src="${shop.stock[i].img}" class="img-thumbnail" /><dl><dt>${shop.stock[i].name}</dt><dd>10.00</dd></dl></div></div>';
+        var doc = new DOMParser().parseFromString(tagString, "text/html");
+        var art = doc.getElementById("item-${shop.stock[i].id}");
+        document.getElementById("items-list").appendChild(art);
+    }
+}
+
+displayShopItemsList();
+console.log(document.getElementById("items-list"));
+// Test log
+// console.log(document.getElementById("items-list").innerHtml);
 
 
 // Events
-document.getElementById("category1").addEventListener("click", toggleCategory("category1"));
+// document.getElementById("category1").addEventListener("click", toggleCategory("category1"));
+// document.getElementById("category1").addEventListener("click", displayShopItemsList("category1"));
