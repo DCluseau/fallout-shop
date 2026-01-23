@@ -59,18 +59,20 @@ class Customer{
     }
     addCartItem(idItem, quantity){
         var itemFound = false;
-        for(var i = 0; i < this.cart.length; i++){
-            
-            if(this.cart[i][0][0].id == idItem){
-                this.cart[i][1][0] += quantity;
-                itemFound = true;
+            for(var i = 0; i < this.cart.length; i++){
+                if(this.cart[i][0][0].id == idItem){
+                    this.cart[i][1][0] = this.cart[i][1][0] + quantity;
+                    itemFound = true;
+                    if(this.cart[i][1][0] <= 0){
+                        this.cart.splice(i,1);
+                    }
+                }
             }
-        }
-        if(itemFound == false){
-            var newItem = shop.stock.find((item) => item.id === idItem);
-            // this.cart.push();
-            this.cart.push([[newItem],[quantity]]);
-        }
+            if(itemFound == false && quantity > 0){
+                var newItem = shop.stock.find((item) => item.id === idItem);
+                // this.cart.push();
+                this.cart.push([[newItem],[quantity]]);
+            }
         console.log(this.cart);
     }
     
@@ -144,7 +146,7 @@ function displayShopItemsList(){
         for(var j = 0; j < shop.stock[i].categories.length; j++){
             tagString = tagString + ' category-' + shop.stock[i].categories[j].id;
         }
-        tagString = tagString + '" style="display: block;"><div class="card-body"><img src="' + shop.stock[i].img + '" class="img-thumbnail" /><dl><dt>' + shop.stock[i].name + '</dt><dd>' + shop.stock[i].price +' caps</dd></dl><button type="button" class="btn btn-success text-end" onClick="addToCart(' + shop.stock[i].id + ', 1)">+</button></div></div>';
+        tagString = tagString + '" style="display: block;"><div class="card-body"><img src="' + shop.stock[i].img + '" class="img-thumbnail" /><dl><dt>' + shop.stock[i].name + '</dt><dd>' + shop.stock[i].price +' caps</dd></dl><button type="button" class="btn btn-success text-end" onClick="addToCart(' + shop.stock[i].id + ', 1)">+</button><button type="button" class="btn btn-danger text-end" onClick="addToCart(' + shop.stock[i].id + ', -1)">-</button></div></div>';
         var doc = new DOMParser().parseFromString(tagString, "text/html");
         var art = doc.getElementById("item-" + shop.stock[i].id);
         document.getElementById("items-list").appendChild(art);
