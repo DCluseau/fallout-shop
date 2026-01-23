@@ -60,17 +60,20 @@ class Customer{
     addCartItem(idItem, quantity){
         var itemFound = false;
         for(var i = 0; i < this.cart.length; i++){
-            if(this.cart[i][0].id == idItem){
-                this.cart[i][0][0] += quantity;
+            
+            if(this.cart[i][0][0].id == idItem){
+                this.cart[i][1][0] += quantity;
                 itemFound = true;
             }
         }
         if(itemFound == false){
             var newItem = shop.stock.find((item) => item.id === idItem);
-            this.cart.push([[newItem][quantity]]);
+            // this.cart.push();
+            this.cart.push([[newItem],[quantity]]);
         }
         console.log(this.cart);
     }
+    
 }
 
 class Shop{
